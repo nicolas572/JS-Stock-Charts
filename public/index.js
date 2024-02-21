@@ -27,23 +27,41 @@ async function main() {
 
     const stocks = [GME, MSFT, DIS, BNTX];
 
-    // stocks.forEach (stock => stock.values = stock.values.reverse())
+    // stocks.forEach (stock => stock.values.reverse())
 
-    //Chart Js check
-
-    // new Chart(timeChartCanvas.getContext('2d'), {
-    //     type: 'line',
-    //     data: {
-    //         labels: stocks[0].values.map(value.datetime),
-    //         datasets: stocks.map(stock => ({
-    //             label: stock.meta.symbol,
-    //             backgroundColor: getColor(stock.meta.symbol),
-    //             borderColor: getColor(stock.meta.symbol),
-    //             data: stock.values.map(value => parseFloat(value.high))
-    //         }))
-    //     }
-    // })
+    //first Chart
+    new Chart(timeChartCanvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: stocks[0].values.map(value => value.datetime),
+            datasets: stocks.map(stock => ({
+                label: stock.meta.symbol,
+                backgroundColor: getColor(stock.meta.symbol),
+                borderColor: getColor(stock.meta.symbol),
+                data: stock.values.map(value => parseFloat(value.high))
+            }))
+        }
+    })
 }
 
-console.log(Chart)
+//Chart Js check
+// console.log(Chart)
+function findHighest(values) {
+    let highest = 0;
+    values.forEach(value => {
+        if (parseFloat(value.high) > highest) {
+            highest = value.high
+        }
+    })
+    return highest
+}
+
+function calculateAverage(values) {
+    let total = 0;
+    values.forEach(value => {
+        total += parseFloat(value.high)
+    })
+    return total / values.length
+}
+
 main()
