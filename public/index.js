@@ -57,6 +57,22 @@ async function main() {
             }]
         }
     });
+
+    //average Chart
+
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: stocks.map (stock => stock.meta.symbol),
+            datasets: [{
+                label: 'Average',
+                backgroundColor: stocks.map(stock => (getColor(stock.meta.symbol))),
+                borderColor: stocks.map(stock => (getColor(stock.meta.symbol))),
+                data: stocks.map(stock => (calculateAverage(stock.values))),
+                
+            }]
+        }
+    })
 }
 
 //Chart Js check
