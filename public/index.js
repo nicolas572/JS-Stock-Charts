@@ -27,7 +27,7 @@ async function main() {
 
     const stocks = [GME, MSFT, DIS, BNTX];
 
-    // stocks.forEach (stock => stock.values.reverse())
+    stocks.forEach (stock => stock.values.reverse())
 
     //first Chart
     new Chart(timeChartCanvas.getContext('2d'), {
@@ -41,7 +41,22 @@ async function main() {
                 data: stock.values.map(value => parseFloat(value.high))
             }))
         }
-    })
+    });
+
+    //highest Chart
+    new Chart(highestPriceChartCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: stocks.map (stock => stock.meta.symbol),
+            datasets: [{
+                label: 'Highest',
+                backgroundColor: stocks.map(stock => (getColor(stock.meta.symbol))),
+                borderColor: stocks.map(stock => (getColor(stock.meta.symbol))),
+                data: stocks.map(stock => (findHighest(stock.values))),
+                
+            }]
+        }
+    });
 }
 
 //Chart Js check
